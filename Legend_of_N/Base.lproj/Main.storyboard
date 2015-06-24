@@ -86,9 +86,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xqU-oi-cVi">
-                                <rect key="frame" x="476" y="28" width="46" height="30"/>
-                                <state key="normal" title="Button">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xqU-oi-cVi">
+                                <rect key="frame" x="503" y="28" width="30" height="30"/>
+                                <state key="normal" image="toBattleButton">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -106,4 +106,7 @@
             <point key="canvasLocation" x="1836" y="698"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="toBattleButton" width="47" height="47"/>
+    </resources>
 </document>
