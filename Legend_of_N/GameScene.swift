@@ -1,8 +1,8 @@
 //
 //  GameScene.swift
-//  Legend_of_N
+//  test
 //
-//  Created by Yuto Kumagai on 2015/06/10.
+//  Created by Yuto Kumagai on 2015/06/22.
 //  Copyright (c) 2015年 NagatamaProject. All rights reserved.
 //
 
@@ -19,10 +19,10 @@ class GameScene: SKScene {
         self.addChild(myLabel)
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */
         
-        for touch: AnyObject in touches {
+        for touch in (touches as! Set<UITouch>) {
             let location = touch.locationInNode(self)
             
             let sprite = SKSpriteNode(imageNamed:"Spaceship")
@@ -38,7 +38,7 @@ class GameScene: SKScene {
             self.addChild(sprite)
         }
     }
-   
+    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
     }

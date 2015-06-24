@@ -9,6 +9,11 @@
 import UIKit
 
 class ProgramingViewController: UIViewController {
+    
+    //プログラミング画面が閉じて戦闘画面へと戻るボタン
+    @IBAction func myBackButton(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true,completion:nil)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
