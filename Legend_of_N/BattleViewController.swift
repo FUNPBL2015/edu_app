@@ -9,11 +9,15 @@
 import UIKit
 
 class BattleViewController: UIViewController {
+    @IBOutlet weak var mybattlemap: UIImageView!
+    @IBOutlet weak var mybattlecode: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        mybattlemap.image = UIImage(named:"battlemap")
+        mybattlecode.image = UIImage(named:"battlecode")
     }
 
     override func didReceiveMemoryWarning() {
