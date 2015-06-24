@@ -11,6 +11,8 @@ import UIKit
 class BattleViewController: UIViewController {
     @IBOutlet weak var mybattlemap: UIImageView!
     @IBOutlet weak var mybattlecode: UIImageView!
+    @IBOutlet weak var mycostlabel: UILabel!
+    @IBOutlet weak var mycostimage: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +20,10 @@ class BattleViewController: UIViewController {
         // Do any additional setup after loading the view.
         mybattlemap.image = UIImage(named:"battlemap")
         mybattlecode.image = UIImage(named:"battlecode")
+        mycostlabel.text = "コスト"
+        mycostlabel.textColor = UIColor.blueColor()
+        mycostimage.image = UIImage(named:"cost")
+        
     }
 
     override func didReceiveMemoryWarning() {
