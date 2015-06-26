@@ -141,12 +141,11 @@
         </scene>
     </scenes>
     <resources>
-
         <image name="ProgrammingButtonBackground" width="513" height="513"/>
         <image name="ProgrammingCodeBackground" width="513" height="513"/>
-        <image name="cost" width="513" height="513"/>
         <image name="battlemap" width="295" height="236"/>
-        <image name="myCharacter1" width="513" height="513"/>
+        <image name="cost" width="513" height="513"/>
+        <image name="myCharacter1" width="128" height="128"/>
         <image name="runButton" width="47" height="47"/>
         <image name="toBattleButton" width="47" height="47"/>
         <image name="toProgramingButton" width="47" height="47"/>
