@@ -61,6 +61,15 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="myCharacter1" translatesAutoresizingMaskIntoConstraints="NO" id="Q4I-js-sVW">
                                 <rect key="frame" x="178" y="260" width="40" height="40"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fCZ-8E-MHa">
+                                <rect key="frame" x="101" y="260" width="40" height="40"/>
+                                <state key="normal" image="RunButton">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="myRunButton:" destination="ILc-Rj-GBB" eventType="touchUpInside" id="OH8-oP-fJF"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -111,6 +120,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="RunButton" width="47" height="47"/>
         <image name="myCharacter1" width="513" height="513"/>
         <image name="toBattleButton" width="47" height="47"/>
     </resources>

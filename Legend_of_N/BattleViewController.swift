@@ -14,6 +14,10 @@ class BattleViewController: UIViewController {
     @IBOutlet weak var mycostlabel: UILabel!
     @IBOutlet weak var mycostimage: UIImageView!
     @IBOutlet weak var mycharacter1: UIImageView!
+    
+    @IBAction func myRunButton(sender: AnyObject) {
+        self.moveView()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
