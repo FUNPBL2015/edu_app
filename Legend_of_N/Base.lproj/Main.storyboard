@@ -49,15 +49,9 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fCZ-8E-MHa">
-                                <rect key="frame" x="101" y="260" width="40" height="40"/>
-                                <state key="normal" image="RunButton">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="myRunButton:" destination="ILc-Rj-GBB" eventType="touchUpInside" id="OH8-oP-fJF"/>
-                                </connections>
-                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="myCharacter1" translatesAutoresizingMaskIntoConstraints="NO" id="Q4I-js-sVW">
+                                <rect key="frame" x="195" y="250" width="40" height="40"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oe6-dH-MiJ">
                                 <rect key="frame" x="29" y="260" width="40" height="40"/>
                                 <state key="normal" image="toProgramingButton">
@@ -67,9 +61,15 @@
                                     <segue destination="J6I-dx-rmz" kind="presentation" id="SX5-gE-QuQ"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="myCharacter1" translatesAutoresizingMaskIntoConstraints="NO" id="Q4I-js-sVW">
-                                <rect key="frame" x="195" y="250" width="40" height="40"/>
-                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fCZ-8E-MHa">
+                                <rect key="frame" x="101" y="260" width="40" height="40"/>
+                                <state key="normal" image="RunButton">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="myRunButton:" destination="ILc-Rj-GBB" eventType="touchUpInside" id="OH8-oP-fJF"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
