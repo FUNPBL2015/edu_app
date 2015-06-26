@@ -17,7 +17,10 @@ class BattleViewController: UIViewController {
     
     //プログラミング実行ボタン
     @IBAction func myRunButton(sender: AnyObject) {
-        self.moveCharacter()
+        //主人公が初期位置にいるときのみmoveCharacter関数を呼び出す
+        if(self.mycharacter1.center == myCharacter1StartPoint){
+            self.moveCharacter()
+        }
     }
 
     let myCharacter1StartPoint = CGPoint(x: 215, y: 270)
