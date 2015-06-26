@@ -20,6 +20,7 @@ class BattleViewController: UIViewController {
         self.moveCharacter()
     }
 
+    let myCharacter1StartPoint = CGPoint(x: 150, y: 280)
     let myCharacter1MovePoint = CGPoint(x: 400, y: 280)
     let myCharacter1FinishPoint = CGPoint(x: 400, y: 80)
     
@@ -55,7 +56,10 @@ class BattleViewController: UIViewController {
                 animations: {
                 self.mycharacter1.center = self.myCharacter1FinishPoint
                 },
-                completion:nil)
+                completion:{finished  in
+                    self.mycharacter1.center = self.myCharacter1StartPoint
+                    }
+                )
             }
         )
     }
