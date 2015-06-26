@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "idiom" : "universal",
+      "scale" : "1x",
+      "filename" : "RunButton1x(8mm).png"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x",
+      "filename" : "RunButton2x(16mm).png"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x",
+      "filename" : "RunButton3x(24mm).png"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}
