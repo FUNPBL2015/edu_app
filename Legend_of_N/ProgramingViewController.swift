@@ -9,7 +9,10 @@
 import UIKit
 
 class ProgramingViewController: UIViewController {
-    
+    @IBOutlet weak var myProgrammingButtonBackground: UIImageView!
+    @IBOutlet weak var myProgrammingCodeBackground: UIImageView!
+    @IBOutlet weak var mycostLabel: UILabel!
+    @IBOutlet weak var mycostImage: UIImageView!
     //プログラミング画面が閉じて戦闘画面へと戻るボタン
     @IBAction func myBackButton(sender: AnyObject) {
         self.dismissViewControllerAnimated(true,completion:nil)
