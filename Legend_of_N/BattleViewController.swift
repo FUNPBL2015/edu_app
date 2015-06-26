@@ -13,7 +13,17 @@ class BattleViewController: UIViewController {
     @IBOutlet weak var mybattlecode: UIImageView!
     @IBOutlet weak var mycostlabel: UILabel!
     @IBOutlet weak var mycostimage: UIImageView!
+    @IBOutlet weak var mycharacter1: UIImageView!
+    
+    //プログラミング実行ボタン
+    @IBAction func myRunButton(sender: AnyObject) {
+        self.moveCharacter()
+    }
 
+    let myCharacter1StartPoint = CGPoint(x: 215, y: 270)
+    let myCharacter1MovePoint = CGPoint(x: 440, y: 270)
+    let myCharacter1FinishPoint = CGPoint(x: 440, y: 80)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,6 +34,32 @@ class BattleViewController: UIViewController {
         mycostlabel.textColor = UIColor.blueColor()
         mycostimage.image = UIImage(named:"cost")
         
+        mycharacter1.image = UIImage(named:"myCharacter1")
+    }
+    
+    //主人公を動かす
+    func moveCharacter(){
+        //関数が呼び出されてから"0.4"秒後に"2.0"秒かけて座標("400","280")に移動する
+        UIView.animateWithDuration(2.0,
+            delay: 0.4 ,
+            options: UIViewAnimationOptions.CurveLinear ,
+            animations: {
+                self.mycharacter1.center = self.myCharacter1MovePoint
+            },
+            //上のamimationsが実行し終わったらcompletionが呼び出される
+            completion:{ (Bool) -> Void in   //(Bool) -> void in ってなによ 噂によるとクロージャっていうらしい
+                //completionの中で別のanimateWithDurationを呼び出す
+                //今度は"0.2"秒後に"0.2"秒かけて座標("400","80")に移動する
+                UIView.animateWithDuration(2.0,
+                delay: 0.2 ,
+                options: UIViewAnimationOptions.CurveLinear ,
+                animations: {
+                self.mycharacter1.center = self.myCharacter1FinishPoint
+                },
+                completion:nil
+                )
+            }
+        )
     }
 
     override func didReceiveMemoryWarning() {
