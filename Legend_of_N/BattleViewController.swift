@@ -20,9 +20,9 @@ class BattleViewController: UIViewController {
         self.moveCharacter()
     }
 
-    let myCharacter1StartPoint = CGPoint(x: 150, y: 280)
-    let myCharacter1MovePoint = CGPoint(x: 400, y: 280)
-    let myCharacter1FinishPoint = CGPoint(x: 400, y: 80)
+    let myCharacter1StartPoint = CGPoint(x: 215, y: 270)
+    let myCharacter1MovePoint = CGPoint(x: 440, y: 270)
+    let myCharacter1FinishPoint = CGPoint(x: 440, y: 80)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,9 +56,7 @@ class BattleViewController: UIViewController {
                 animations: {
                 self.mycharacter1.center = self.myCharacter1FinishPoint
                 },
-                completion:{finished  in
-                    self.mycharacter1.center = self.myCharacter1StartPoint
-                    }
+                completion:nil
                 )
             }
         )
