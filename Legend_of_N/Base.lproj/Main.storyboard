@@ -58,6 +58,9 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="myCharacter1" translatesAutoresizingMaskIntoConstraints="NO" id="Q4I-js-sVW">
+                                <rect key="frame" x="178" y="260" width="40" height="40"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -66,6 +69,7 @@
                     <connections>
                         <outlet property="mybattlecode" destination="dcK-V0-zJI" id="p2w-gX-OAe"/>
                         <outlet property="mybattlemap" destination="YzN-nf-e3F" id="CsD-xh-W7B"/>
+                        <outlet property="mycharacter1" destination="Q4I-js-sVW" id="mpv-1n-REU"/>
                         <outlet property="mycostimage" destination="RyW-7o-9ek" id="5Dn-1F-EKy"/>
                         <outlet property="mycostlabel" destination="VfO-Tt-yyv" id="PI5-VW-5K9"/>
                     </connections>
@@ -107,6 +111,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="myCharacter1" width="513" height="513"/>
         <image name="toBattleButton" width="47" height="47"/>
     </resources>
 </document>

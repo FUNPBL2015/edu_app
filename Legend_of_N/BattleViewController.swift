@@ -13,6 +13,7 @@ class BattleViewController: UIViewController {
     @IBOutlet weak var mybattlecode: UIImageView!
     @IBOutlet weak var mycostlabel: UILabel!
     @IBOutlet weak var mycostimage: UIImageView!
+    @IBOutlet weak var mycharacter1: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +24,23 @@ class BattleViewController: UIViewController {
         mycostlabel.text = "コスト"
         mycostlabel.textColor = UIColor.blueColor()
         mycostimage.image = UIImage(named:"cost")
+        mycharacter1.image = UIImage(named:"myCharacter1")
         
+    }
+    
+    //主人公を動かす
+    func moveView(){
+        //関数が呼び出されてから"0.4"秒後に"0.2"秒かけて座標("100","100")に移動する
+        UIView.animateWithDuration(0.2,
+            delay: 0.4 ,
+            options: UIViewAnimationOptions.CurveLinear ,
+            animations: {
+                self.mycharacter1.center = CGPoint(x: 100,y: 100)
+            },
+            completion:{ finished  in
+                self.mycharacter1.center = CGPoint(x: 0,y: 0)
+            }
+        )
     }
 
     override func didReceiveMemoryWarning() {
