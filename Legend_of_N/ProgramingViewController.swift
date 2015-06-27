@@ -9,19 +9,35 @@
 import UIKit
 
 class ProgramingViewController: UIViewController {
-    @IBOutlet weak var myProgrammingButtonBackground: UIImageView!
     @IBOutlet weak var myProgrammingCodeBackground: UIImageView!
     @IBOutlet weak var mycostLabel: UILabel!
     @IBOutlet weak var mycostImage: UIImageView!
     //プログラミング画面が閉じて戦闘画面へと戻るボタン
+    @IBOutlet weak var SourceButtonScrollView: UIScrollView!
     @IBAction func myBackButton(sender: AnyObject) {
         self.dismissViewControllerAnimated(true,completion:nil)
+    }
+    
+    var SourceButtons = Dictionary<String, UIButton>()
+    
+    
+    private func createSourceButton(image: String, tag: Int) -> UIButton{
+        let button = UIButton()
+        button.setImage(UIImage(named:image), forState: UIControlState.Normal)
+        button.frame.size = CGSizeMake(38,38)
+        button.layer.position = CGPoint(x: 19, y:500)
+        button.tag = tag
+        return button
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.SourceButtonScrollView.contentSize = CGSizeMake(240, 700);
+        
+        SourceButtons["0"] = self.createSourceButton("SourceButton_0", tag: 1)
+        self.SourceButtonScrollView.addSubview(SourceButtons["0"]!)
     }
 
     override func didReceiveMemoryWarning() {

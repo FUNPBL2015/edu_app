@@ -108,9 +108,6 @@
                                     <action selector="myBackButton:" destination="J6I-dx-rmz" eventType="touchUpInside" id="q3d-ov-gb6"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ProgrammingButtonBackground" translatesAutoresizingMaskIntoConstraints="NO" id="4OH-3j-ARA">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="320"/>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="コスト" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O6J-qR-0E6">
                                 <rect key="frame" x="248" y="12" width="51" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -123,13 +120,16 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ProgrammingCodeBackground" translatesAutoresizingMaskIntoConstraints="NO" id="Moc-vk-Eng">
                                 <rect key="frame" x="248" y="46" width="311" height="274"/>
                             </imageView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ddR-9N-yeA">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="320"/>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="myProgrammingButtonBackground" destination="4OH-3j-ARA" id="Ias-WH-zBl"/>
+                        <outlet property="SourceButtonScrollView" destination="ddR-9N-yeA" id="8pp-1b-4Ni"/>
                         <outlet property="myProgrammingCodeBackground" destination="m2W-DD-Kyb" id="M0Q-cd-RZt"/>
                         <outlet property="mycostImage" destination="m2W-DD-Kyb" id="hfq-AP-GRO"/>
                         <outlet property="mycostLabel" destination="O6J-qR-0E6" id="EI4-vz-aye"/>
@@ -141,7 +141,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ProgrammingButtonBackground" width="513" height="513"/>
         <image name="ProgrammingCodeBackground" width="513" height="513"/>
         <image name="battlemap" width="295" height="236"/>
         <image name="cost" width="513" height="513"/>
