@@ -18,26 +18,58 @@ class ProgramingViewController: UIViewController {
         self.dismissViewControllerAnimated(true,completion:nil)
     }
     
+    //ソースボタンのDictionary、キー値としてソースボタンの名前を持つ
+    //例：UIButton test = SourceButtons["up"] としてやるとupのソースボタンがtestに代入される
     var SourceButtons = Dictionary<String, UIButton>()
     
+    //createSourceButtonメソッドの引数buttonSizeにて用いる定数
+    let SourceButtonSizeForSquare = CGSizeMake(38,38)    //正方形のソースボタンのサイズ
+    let SourceButtonSizeForRectangle = CGSizeMake(76,38) //長方形のソースボタンのサイズ
     
-    private func createSourceButton(image: String, tag: Int) -> UIButton{
+    //ソースボタンを作成する
+    private func createSourceButton(image: String, buttonSize: CGSize, buttonPosition: CGPoint, tag: Int) -> UIButton{
         let button = UIButton()
         button.setImage(UIImage(named:image), forState: UIControlState.Normal)
-        button.frame.size = CGSizeMake(38,38)
-        button.layer.position = CGPoint(x: 19, y:500)
-        button.tag = tag
+        button.frame.size = buttonSize            //ボタンのサイズ
+        button.layer.position = buttonPosition    //ボタンの位置
+        button.tag = tag                          //ボタンそれぞれに一意なタグを付与
         return button
+    }
+    
+    //もともとはviewDidLoadに書いてたけど見た目ヤバいのでメソッドに移しました
+    //やってることは単純でDictionaryの中にボタン入れていってるだけです
+    private func SourceButtonsDidLoad(){
+        SourceButtons["move"] = self.createSourceButton("SourceButton_move", buttonSize: SourceButtonSizeForRectangle, buttonPosition: CGPoint(x: 50, y: 32),  tag: 0)
+        SourceButtons["attack"] = self.createSourceButton("SourceButton_attack", buttonSize: SourceButtonSizeForRectangle, buttonPosition: CGPoint(x: 152, y: 32),  tag: 1)
+        SourceButtons["up"] = self.createSourceButton("SourceButton_up", buttonSize: SourceButtonSizeForRectangle, buttonPosition: CGPoint(x: 101, y: 107),  tag: 2)
+        SourceButtons["left"] = self.createSourceButton("SourceButton_left", buttonSize: SourceButtonSizeForRectangle, buttonPosition: CGPoint(x: 50, y: 170),  tag: 3)
+        SourceButtons["right"] = self.createSourceButton("SourceButton_right", buttonSize: SourceButtonSizeForRectangle, buttonPosition: CGPoint(x: 152, y: 170),  tag: 4)
+        SourceButtons["down"] = self.createSourceButton("SourceButton_down", buttonSize: SourceButtonSizeForRectangle, buttonPosition: CGPoint(x: 101, y: 233),  tag: 5)
+        SourceButtons["1"] = self.createSourceButton("SourceButton_1", buttonSize: SourceButtonSizeForSquare, buttonPosition: CGPoint(x: 34, y: 309),  tag: 6)
+        SourceButtons["2"] = self.createSourceButton("SourceButton_2", buttonSize: SourceButtonSizeForSquare, buttonPosition: CGPoint(x: 101, y: 309),  tag: 7)
+        SourceButtons["3"] = self.createSourceButton("SourceButton_3", buttonSize: SourceButtonSizeForSquare, buttonPosition: CGPoint(x: 171, y: 309),  tag: 8)
+        SourceButtons["4"] = self.createSourceButton("SourceButton_4", buttonSize: SourceButtonSizeForSquare, buttonPosition: CGPoint(x: 34, y: 372),  tag: 9)
+        SourceButtons["5"] = self.createSourceButton("SourceButton_5", buttonSize: SourceButtonSizeForSquare, buttonPosition: CGPoint(x: 101, y: 372),  tag: 10)
+        SourceButtons["6"] = self.createSourceButton("SourceButton_6", buttonSize: SourceButtonSizeForSquare, buttonPosition: CGPoint(x: 171, y: 372),  tag: 11)
+        SourceButtons["7"] = self.createSourceButton("SourceButton_7", buttonSize: SourceButtonSizeForSquare, buttonPosition: CGPoint(x: 34, y: 435),  tag: 12)
+        SourceButtons["8"] = self.createSourceButton("SourceButton_8", buttonSize: SourceButtonSizeForSquare, buttonPosition: CGPoint(x: 101, y: 435),  tag: 13)
+        SourceButtons["9"] = self.createSourceButton("SourceButton_9", buttonSize: SourceButtonSizeForSquare, buttonPosition: CGPoint(x: 171, y: 435),  tag: 14)
+        SourceButtons["0"] = self.createSourceButton("SourceButton_0", buttonSize: SourceButtonSizeForSquare, buttonPosition: CGPoint(x: 101, y: 498),  tag: 15)
+        SourceButtons["semicolon"] = self.createSourceButton("SourceButton_semicolon", buttonSize: SourceButtonSizeForSquare, buttonPosition: CGPoint(x: 34, y: 573),  tag: 16)
+        
+        //ソースボタンそれぞれをSourceButtonScrollViewのSubviewに追加する（これやらないとボタンが見えない）
+        for buttonKey in SourceButtons.keys {
+            self.SourceButtonScrollView.addSubview(SourceButtons[buttonKey]!)
+        }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.SourceButtonsDidLoad()  //ソースボタンを作成、表示させる
 
-        // Do any additional setup after loading the view.
-        self.SourceButtonScrollView.contentSize = CGSizeMake(240, 700);
+        //SourceButtonScrollViewをストーリーボードのと違う縦幅にすることでスクロールするようになる
+        self.SourceButtonScrollView.contentSize = CGSizeMake(202, 620);
         
-        SourceButtons["0"] = self.createSourceButton("SourceButton_0", tag: 1)
-        self.SourceButtonScrollView.addSubview(SourceButtons["0"]!)
     }
 
     override func didReceiveMemoryWarning() {
