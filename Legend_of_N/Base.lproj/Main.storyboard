@@ -37,7 +37,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="battlemap" translatesAutoresizingMaskIntoConstraints="NO" id="YzN-nf-e3F">
                                 <rect key="frame" x="178" y="48" width="374" height="252"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dcK-V0-zJI">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="battlecode" translatesAutoresizingMaskIntoConstraints="NO" id="dcK-V0-zJI">
                                 <rect key="frame" x="16" y="10" width="143" height="290"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RyW-7o-9ek">
@@ -143,6 +143,7 @@
     <resources>
         <image name="ProgrammingButtonBackground" width="513" height="513"/>
         <image name="ProgrammingCodeBackground" width="513" height="513"/>
+        <image name="battlecode" width="737" height="860"/>
         <image name="battlemap" width="295" height="236"/>
         <image name="cost" width="513" height="513"/>
         <image name="myCharacter1" width="128" height="128"/>

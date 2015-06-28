@@ -31,8 +31,6 @@ class BattleViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        mybattlemap.image = UIImage(named:"battlemap")
-        mybattlecode.image = UIImage(named:"battlecode")
         mycostlabel.text = "コスト"
         mycostlabel.textColor = UIColor.blueColor()
         mycostimage.image = UIImage(named:"cost")
