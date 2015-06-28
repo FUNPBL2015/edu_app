@@ -2,18 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "exaple.png"
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "exaple-1.png"
+      "filename" : "battle_programming_2x(354x413px).png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "exaple-2.png"
+      "filename" : "battle_programming_3x(708x826px).png"
     }
   ],
   "info" : {
