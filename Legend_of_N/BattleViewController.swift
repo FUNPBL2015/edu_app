@@ -30,11 +30,7 @@ class BattleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        mycostlabel.text = "コスト"
-        mycostlabel.textColor = UIColor.blueColor()
-        mycostimage.image = UIImage(named:"cost")
-        
+        // Do any additional setup after loading the view.        
         mycharacter1.image = UIImage(named:"myCharacter1")
     }
     
