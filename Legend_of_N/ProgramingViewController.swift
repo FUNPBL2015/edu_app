@@ -9,7 +9,6 @@
 import UIKit
 
 class ProgramingViewController: UIViewController {
-    @IBOutlet weak var myProgrammingCodeBackground: UIImageView!
     @IBOutlet weak var mycostLabel: UILabel!
     @IBOutlet weak var mycostImage: UIImageView!
     //プログラミング画面が閉じて戦闘画面へと戻るボタン
