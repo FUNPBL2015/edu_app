@@ -22,9 +22,14 @@ class ProgramingViewController: UIViewController {
     //例：UIButton test = SourceButtons["up"] としてやるとupのソースボタンがtestに代入される
     var SourceButtons = Dictionary<String, UIButton>()
     
+    //ソースラベルのDictionary
+    var SourceLabels = Dictionary<String, UILabel>()
+    
     //createSourceButtonメソッドの引数buttonSizeにて用いる定数
     let SourceButtonSizeForSquare = CGSizeMake(38,38)    //正方形のソースボタンのサイズ
     let SourceButtonSizeForRectangle = CGSizeMake(76,38) //長方形のソースボタンのサイズ
+    
+    let SourceLabelSizeForRectangle = CGSizeMake(150,38) //長方形のソースラベルのサイズ
     
     //ソースボタンを作成する
     private func createSourceButton(image: String, buttonSize: CGSize, buttonPosition: CGPoint, tag: Int) -> UIButton{
@@ -35,6 +40,14 @@ class ProgramingViewController: UIViewController {
         button.tag = tag                          //ボタンそれぞれに一意なタグを付与
         button.addTarget(self, action: "onTapSourceButtons:", forControlEvents: UIControlEvents.TouchUpInside)
         return button
+    }
+    //ソースラベルを作成する
+    private func createSourceLabel(labelSize: CGSize, labelPosition: CGPoint, tag: Int) -> UILabel{
+        let label = UILabel()
+        label.frame.size = labelSize            //ラベルのサイズ
+        label.layer.position = labelPosition    //ラベルの位置
+        label.tag = tag                          //ラベルそれぞれに一意なタグを付与
+        return label
     }
     
     //もともとはviewDidLoadに書いてたけど見た目ヤバいのでメソッドに移しました
