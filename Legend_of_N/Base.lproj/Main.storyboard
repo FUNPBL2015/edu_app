@@ -99,15 +99,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xqU-oi-cVi">
-                                <rect key="frame" x="529" y="6" width="30" height="30"/>
-                                <state key="normal" image="toBattleButton">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="myBackButton:" destination="J6I-dx-rmz" eventType="touchUpInside" id="q3d-ov-gb6"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="コスト" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O6J-qR-0E6">
                                 <rect key="frame" x="248" y="12" width="51" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -117,12 +108,21 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="cost" translatesAutoresizingMaskIntoConstraints="NO" id="m2W-DD-Kyb">
                                 <rect key="frame" x="297" y="8" width="224" height="30"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ProgrammingCodeBackground" translatesAutoresizingMaskIntoConstraints="NO" id="Moc-vk-Eng">
-                                <rect key="frame" x="248" y="46" width="311" height="274"/>
-                            </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ddR-9N-yeA">
                                 <rect key="frame" x="0.0" y="0.0" width="202" height="320"/>
                             </scrollView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="programingcode" translatesAutoresizingMaskIntoConstraints="NO" id="9Zi-MB-wjp">
+                                <rect key="frame" x="214" y="59" width="295" height="236"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xqU-oi-cVi">
+                                <rect key="frame" x="510" y="12" width="46" height="46"/>
+                                <state key="normal" image="toBattleButton">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="myBackButton:" destination="J6I-dx-rmz" eventType="touchUpInside" id="q3d-ov-gb6"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -130,7 +130,6 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="SourceButtonScrollView" destination="ddR-9N-yeA" id="8pp-1b-4Ni"/>
-                        <outlet property="myProgrammingCodeBackground" destination="m2W-DD-Kyb" id="M0Q-cd-RZt"/>
                         <outlet property="mycostImage" destination="m2W-DD-Kyb" id="hfq-AP-GRO"/>
                         <outlet property="mycostLabel" destination="O6J-qR-0E6" id="EI4-vz-aye"/>
                     </connections>
@@ -141,11 +140,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ProgrammingCodeBackground" width="513" height="513"/>
         <image name="battlecode" width="737" height="860"/>
         <image name="battlemap" width="295" height="236"/>
         <image name="cost" width="513" height="513"/>
         <image name="myCharacter1" width="128" height="128"/>
+        <image name="programingcode" width="1227" height="983"/>
         <image name="runButton" width="47" height="47"/>
         <image name="toBattleButton" width="47" height="47"/>
         <image name="toProgramingButton" width="47" height="47"/>
