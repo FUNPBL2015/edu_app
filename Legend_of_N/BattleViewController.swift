@@ -23,8 +23,8 @@ class BattleViewController: UIViewController {
         }
     }
 
-    let myCharacter1StartPoint = CGPoint(x: 215, y: 270)
-    let myCharacter1MovePoint = CGPoint(x: 440, y: 270)
+    let myCharacter1StartPoint = CGPoint(x: 263, y: 260)
+    let myCharacter1MovePoint = CGPoint(x: 440, y: 260)
     let myCharacter1FinishPoint = CGPoint(x: 440, y: 80)
     
     override func viewDidLoad() {
