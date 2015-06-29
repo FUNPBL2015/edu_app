@@ -18,6 +18,7 @@ class ProgramingViewController: UIViewController {
     }
     @IBOutlet weak var myCodeText: UITextView!
     @IBOutlet weak var myErrorText: UITextView!
+    @IBOutlet weak var CostLabel: UILabel!  //コストを表示するラベル
 
     var canPutResetMethodFlag = true //コードの初期状態と終了状態を表すフラグ
     var canPutActionMethodFlag = false //アクションに関するフラグ
@@ -76,10 +77,17 @@ class ProgramingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.SourceButtonsDidLoad()  //ソースボタンを作成、表示させる
+        self.CalculateSourceCost()   //ソースコストを表示
 
         //SourceButtonScrollViewをストーリーボードのと違う縦幅にすることでスクロールするようになる
         self.SourceButtonScrollView.contentSize = CGSizeMake(202, 620);
         
+    }
+    
+    //現在のソースコストを再計算する
+    //コストの値が変更することがあれば必ず呼んでください
+    func CalculateSourceCost(){
+        self.CostLabel.text = String(SourceCost) + " / 15"
     }
     
     //それぞれのフラグを条件にしてテキストを表示する関数
@@ -96,6 +104,7 @@ class ProgramingViewController: UIViewController {
             canPutNumberMethodFlag = true
             //数字メソッドはコスト移動距離分なので引数numをintに変換してSourceCostに足す
             self.SourceCost = self.SourceCost + num.toInt()!
+            self.CalculateSourceCost()
         }else{
             myErrorText.text = "適切なプログラミングを書いてください"
         }
@@ -108,6 +117,7 @@ class ProgramingViewController: UIViewController {
             canPutResetMethodFlag = false
             canPutActionMethodFlag = true
             self.SourceCost = self.SourceCost + 1 //アクションメソッドはコスト１のためSourceCostに１を足す
+            self.CalculateSourceCost()
         }else{
             myErrorText.text = "適切なプログラミングを書いてください"
         }
