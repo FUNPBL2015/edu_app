@@ -25,7 +25,8 @@ class ProgramingViewController: UIViewController {
     var canPutArrowMethodFlag = false //矢印に関するフラグ
     var canPutNumberMethodFlag = false //数に関するフラグ
     
-    var SourceCost = 0
+    var SourceCostNow = 0  //現在のソースコストの値
+    var SourceCostLimit = 15 //現在のソースコストの上限値、将来的にはここが他クラスから変更できるように改変するのかね
     
     //ソースボタンのDictionary、キー値としてソースボタンの名前を持つ
     //例：UIButton test = SourceButtons["up"] としてやるとupのソースボタンがtestに代入される
@@ -87,7 +88,7 @@ class ProgramingViewController: UIViewController {
     //現在のソースコストを再計算する
     //コストの値が変更することがあれば必ず呼んでください
     func CalculateSourceCost(){
-        self.CostLabel.text = String(SourceCost) + " / 15"
+        self.CostLabel.text = String(SourceCostNow) + " / " + String(SourceCostLimit)
     }
     
     //それぞれのフラグを条件にしてテキストを表示する関数
@@ -98,13 +99,17 @@ class ProgramingViewController: UIViewController {
     
     func showSourceText_number(num: String){ //数字に関するフラグ関数
         if(canPutArrowMethodFlag == true){
-            myErrorText.text = ""
-            myCodeText.text = myCodeText.text + num
-            canPutArrowMethodFlag = false
-            canPutNumberMethodFlag = true
-            //数字メソッドはコスト移動距離分なので引数numをintに変換してSourceCostに足す
-            self.SourceCost = self.SourceCost + num.toInt()!
-            self.CalculateSourceCost()
+            if((SourceCostNow + num.toInt()!) > SourceCostLimit){ //ソースコストが上限値を突破したらエラー吐かせる
+                myErrorText.text = "コストが上限値を突破してしまいます"
+            }else{
+                myErrorText.text = ""
+                myCodeText.text = myCodeText.text + num
+                canPutArrowMethodFlag = false
+                canPutNumberMethodFlag = true
+                //数字メソッドはコスト移動距離分なので引数numをintに変換してSourceCostに足す
+                self.SourceCostNow = self.SourceCostNow + num.toInt()!
+                self.CalculateSourceCost() //ソースコスト表示更新
+            }
         }else{
             myErrorText.text = "適切なプログラミングを書いてください"
         }
@@ -112,12 +117,17 @@ class ProgramingViewController: UIViewController {
     
     func showSourceText_action(act: String){//行動に関する
         if(canPutResetMethodFlag == true){
-            myErrorText.text = ""
-            myCodeText.text = myCodeText.text + act + "("
-            canPutResetMethodFlag = false
-            canPutActionMethodFlag = true
-            self.SourceCost = self.SourceCost + 1 //アクションメソッドはコスト１のためSourceCostに１を足す
-            self.CalculateSourceCost()
+            if((SourceCostNow + 1) > SourceCostLimit){ //ソースコストが上限値を突破したらエラー吐かせる
+                myErrorText.text = "コストが上限値を突破してしまいます"
+            }else{
+                myErrorText.text = ""
+                myCodeText.text = myCodeText.text + act + "("
+                canPutResetMethodFlag = false
+                canPutActionMethodFlag = true
+                //アクションメソッドはコスト１のためSourceCostに１を足す
+                self.SourceCostNow = self.SourceCostNow + 1
+                self.CalculateSourceCost() ////ソースコスト表示更新
+            }
         }else{
             myErrorText.text = "適切なプログラミングを書いてください"
         }
@@ -157,7 +167,6 @@ class ProgramingViewController: UIViewController {
             case 1:     //"1"
                 println(sender.tag)
                 showSourceText_number("1")
-                println("cost" + String(SourceCost))
             case 2:     //"2"
                 println(sender.tag)
                 showSourceText_number("2")
@@ -179,18 +188,15 @@ class ProgramingViewController: UIViewController {
             case 8:     //"8"
                 println(sender.tag)
                 showSourceText_number("8")
-                println("cost" + String(SourceCost))
             case 9:     //"9"
                 println(sender.tag)
                 showSourceText_number("9")
-                println("cost" + String(SourceCost))
             case 10:    //"move"
                 println(sender.tag)
                 showSourceText_action("move")
             case 11:    //"attack"
                 println(sender.tag)
                 showSourceText_action("attack")
-                println("cost" + String(SourceCost))
             case 12:    //"up"
                 println(sender.tag)
                 showSourceText_arrow("up")
