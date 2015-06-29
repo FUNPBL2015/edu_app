@@ -9,7 +9,6 @@
 import UIKit
 
 class ProgramingViewController: UIViewController {
-    @IBOutlet weak var myProgrammingCodeBackground: UIImageView!
     @IBOutlet weak var mycostLabel: UILabel!
     @IBOutlet weak var mycostImage: UIImageView!
     //プログラミング画面が閉じて戦闘画面へと戻るボタン
@@ -18,19 +17,16 @@ class ProgramingViewController: UIViewController {
         self.dismissViewControllerAnimated(true,completion:nil)
     }
     @IBOutlet weak var myCodeText: UITextView!
-    
     @IBOutlet weak var myErrorText: UITextView!
-  
     var canPutResetMethodFlag = true //コードの初期状態と終了状態を表すフラグ
     var canPutActionMethodFlag = false //アクションに関するフラグ
     var canPutArrowMethodFlag = false //矢印に関するフラグ
     var canPutNumberMethodFlag = false //数に関するフラグ
-
     
     //ソースボタンのDictionary、キー値としてソースボタンの名前を持つ
     //例：UIButton test = SourceButtons["up"] としてやるとupのソースボタンがtestに代入される
     var SourceButtons = Dictionary<String, UIButton>()
-
+    
     //createSourceButtonメソッドの引数buttonSizeにて用いる定数
     let SourceButtonSizeForSquare = CGSizeMake(38,38)    //正方形のソースボタンのサイズ
     let SourceButtonSizeForRectangle = CGSizeMake(76,38) //長方形のソースボタンのサイズ
@@ -45,7 +41,6 @@ class ProgramingViewController: UIViewController {
         button.addTarget(self, action: "onTapSourceButtons:", forControlEvents: UIControlEvents.TouchUpInside)
         return button
     }
-
     
     //もともとはviewDidLoadに書いてたけど見た目ヤバいのでメソッドに移しました
     //やってることは単純でDictionaryの中にボタン入れていってるだけです
@@ -191,7 +186,6 @@ class ProgramingViewController: UIViewController {
             case 16:    //";"
                 println(sender.tag)
                 showSourceText_semicolon(";")
-
             default:    //どの場合でもない、これが出たらバグです
                 println("ぬる")
         }
