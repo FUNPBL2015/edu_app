@@ -20,6 +20,12 @@ class ProgramingViewController: UIViewController {
     @IBOutlet weak var myCodeText: UITextView!
     
     @IBOutlet weak var myErrorText: UITextView!
+  
+    var canPutResetMethodFlag = true //コードの初期状態と終了状態を表すフラグ
+    var canPutActionMethodFlag = false //アクションに関するフラグ
+    var canPutArrowMethodFlag = false //矢印に関するフラグ
+    var canPutNumberMethodFlag = false //数に関するフラグ
+
     
     //ソースボタンのDictionary、キー値としてソースボタンの名前を持つ
     //例：UIButton test = SourceButtons["up"] としてやるとupのソースボタンがtestに代入される
@@ -78,50 +84,55 @@ class ProgramingViewController: UIViewController {
         
     }
     
-    var reset = true //actionボタンに関するフラグ
-    var action = false //矢印キーに関するフラグ
-    var arrow = false //数ボタンに関するフラグ
-    var number = false //セミコロンに関するフラグ
-
     //それぞれのフラグを条件にしてテキストを表示する関数
     //条件が合わないなら”適切なプログラミングを書いてください。”と表示する
     //(例)"1"ボタンを押すにはarrowフラグがtrueでないといけなく、その直前の”right”などのボタンを押した時にarrowフラグはtrueになる
-    //セミコロンに関する関数は作成しておらず
     //この関数はonTapSourceButtons関数のSwitch文で使われている
 
     
-    func showSourceText_number(num: String){
-        if(arrow == true){
+    func showSourceText_number(num: String){ //数関するフラグ関数
+        if(canPutArrowMethodFlag == true){
             myErrorText.text = ""
             myCodeText.text = myCodeText.text + num
-            arrow = false
-            number = true
+            canPutArrowMethodFlag = false
+            canPutNumberMethodFlag = true
         }else{
             myErrorText.text = "適切なプログラミングを書いてください"
         }
     }
     
-    func showSourceText_action(act: String){
-        if(reset == true){
+    func showSourceText_action(act: String){//行動に関する
+        if(canPutResetMethodFlag == true){
             myErrorText.text = ""
             myCodeText.text = myCodeText.text + act + "("
-            reset = false
-            action = true
+            canPutResetMethodFlag = false
+            canPutActionMethodFlag = true
         }else{
             myErrorText.text = "適切なプログラミングを書いてください"
         }
     }
     
-    func showSourceText_arrow(arr: String){
-        if(action == true){
+    func showSourceText_arrow(arr: String){//矢印に関する
+        if(canPutActionMethodFlag == true){
             myErrorText.text = ""
             myCodeText.text = myCodeText.text + arr + ", "
-            action = false
-            arrow = true
+            canPutActionMethodFlag = false
+            canPutArrowMethodFlag = true
         }else{
             myErrorText.text = "適切なプログラミングを書いてください"
         }
 
+    }
+    func showSourceText_semicolon(colon: String){//セミコロン
+        if(canPutNumberMethodFlag == true){
+            myErrorText.text = ""
+            myCodeText.text = myCodeText.text + ")"+colon+"\n"
+            canPutResetMethodFlag = true
+            canPutNumberMethodFlag = false
+        }else{
+            myErrorText.text = "適切なプログラミングを書いてください"
+        }
+        
     }
 
     //ソースボタンをタップした時に呼び出される
@@ -179,14 +190,8 @@ class ProgramingViewController: UIViewController {
                 showSourceText_arrow("down")
             case 16:    //";"
                 println(sender.tag)
-                if(number == true){
-                    myErrorText.text = ""
-                    myCodeText.text = myCodeText.text + ");\n"
-                    reset = true
-                    number = false
-                }else{
-                    myErrorText.text = "適切なプログラミングを書いてください"
-            }
+                showSourceText_semicolon(";")
+
             default:    //どの場合でもない、これが出たらバグです
                 println("ぬる")
         }
