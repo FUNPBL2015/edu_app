@@ -120,9 +120,19 @@
                                     <action selector="myBackButton:" destination="J6I-dx-rmz" eventType="touchUpInside" id="q3d-ov-gb6"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="programingcode" translatesAutoresizingMaskIntoConstraints="NO" id="9Zi-MB-wjp">
-                                <rect key="frame" x="232" y="60" width="295" height="236"/>
-                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="kpy-KO-0Ig">
+                                <rect key="frame" x="230" y="282" width="297" height="55"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="1" green="0.1618476838" blue="0.20517836249999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zf2-11-F6g">
+                                <rect key="frame" x="230" y="53" width="295" height="225"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -130,6 +140,8 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="SourceButtonScrollView" destination="ddR-9N-yeA" id="8pp-1b-4Ni"/>
+                        <outlet property="myCodeText" destination="Zf2-11-F6g" id="2mH-hY-ZW0"/>
+                        <outlet property="myErrorText" destination="kpy-KO-0Ig" id="FlK-kn-Ykg"/>
                         <outlet property="mycostImage" destination="m2W-DD-Kyb" id="hfq-AP-GRO"/>
                         <outlet property="mycostLabel" destination="O6J-qR-0E6" id="EI4-vz-aye"/>
                     </connections>
@@ -144,7 +156,6 @@
         <image name="battlemap" width="295" height="236"/>
         <image name="cost" width="729" height="104"/>
         <image name="myCharacter1" width="128" height="128"/>
-        <image name="programingcode" width="1227" height="983"/>
         <image name="runButton" width="47" height="47"/>
         <image name="toBattleButton" width="47" height="47"/>
         <image name="toProgramingButton" width="47" height="47"/>

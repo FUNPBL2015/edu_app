@@ -16,6 +16,12 @@ class ProgramingViewController: UIViewController {
     @IBAction func myBackButton(sender: AnyObject) {
         self.dismissViewControllerAnimated(true,completion:nil)
     }
+    @IBOutlet weak var myCodeText: UITextView!
+    @IBOutlet weak var myErrorText: UITextView!
+    var canPutResetMethodFlag = true //コードの初期状態と終了状態を表すフラグ
+    var canPutActionMethodFlag = false //アクションに関するフラグ
+    var canPutArrowMethodFlag = false //矢印に関するフラグ
+    var canPutNumberMethodFlag = false //数に関するフラグ
     
     //ソースボタンのDictionary、キー値としてソースボタンの名前を持つ
     //例：UIButton test = SourceButtons["up"] としてやるとupのソースボタンがtestに代入される
@@ -73,6 +79,57 @@ class ProgramingViewController: UIViewController {
         
     }
     
+    //それぞれのフラグを条件にしてテキストを表示する関数
+    //条件が合わないなら”適切なプログラミングを書いてください。”と表示する
+    //(例)"1"ボタンを押すにはarrowフラグがtrueでないといけなく、その直前の”right”などのボタンを押した時にarrowフラグはtrueになる
+    //この関数はonTapSourceButtons関数のSwitch文で使われている
+
+    
+    func showSourceText_number(num: String){ //数関するフラグ関数
+        if(canPutArrowMethodFlag == true){
+            myErrorText.text = ""
+            myCodeText.text = myCodeText.text + num
+            canPutArrowMethodFlag = false
+            canPutNumberMethodFlag = true
+        }else{
+            myErrorText.text = "適切なプログラミングを書いてください"
+        }
+    }
+    
+    func showSourceText_action(act: String){//行動に関する
+        if(canPutResetMethodFlag == true){
+            myErrorText.text = ""
+            myCodeText.text = myCodeText.text + act + "("
+            canPutResetMethodFlag = false
+            canPutActionMethodFlag = true
+        }else{
+            myErrorText.text = "適切なプログラミングを書いてください"
+        }
+    }
+    
+    func showSourceText_arrow(arr: String){//矢印に関する
+        if(canPutActionMethodFlag == true){
+            myErrorText.text = ""
+            myCodeText.text = myCodeText.text + arr + ", "
+            canPutActionMethodFlag = false
+            canPutArrowMethodFlag = true
+        }else{
+            myErrorText.text = "適切なプログラミングを書いてください"
+        }
+
+    }
+    func showSourceText_semicolon(colon: String){//セミコロン
+        if(canPutNumberMethodFlag == true){
+            myErrorText.text = ""
+            myCodeText.text = myCodeText.text + ")"+colon+"\n"
+            canPutResetMethodFlag = true
+            canPutNumberMethodFlag = false
+        }else{
+            myErrorText.text = "適切なプログラミングを書いてください"
+        }
+        
+    }
+
     //ソースボタンをタップした時に呼び出される
     //ソースボタンそれぞれにはtagがふってあるのでそれで場合分けしてる
     //どのケースがどのボタンかはコメント参照
@@ -80,38 +137,55 @@ class ProgramingViewController: UIViewController {
         switch(sender.tag) {
             case 0:     //"0"
                 println(sender.tag)
+                showSourceText_number("0")
             case 1:     //"1"
                 println(sender.tag)
+                showSourceText_number("1")
             case 2:     //"2"
                 println(sender.tag)
+                showSourceText_number("2")
             case 3:     //"3"
                 println(sender.tag)
+                showSourceText_number("3")
             case 4:     //"4"
                 println(sender.tag)
+                showSourceText_number("4")
             case 5:     //"5"
                 println(sender.tag)
+                showSourceText_number("5")
             case 6:     //"6"
                 println(sender.tag)
+                showSourceText_number("6")
             case 7:     //"7"
                 println(sender.tag)
+                showSourceText_number("7")
             case 8:     //"8"
                 println(sender.tag)
+                showSourceText_number("8")
             case 9:     //"9"
                 println(sender.tag)
+                showSourceText_number("9")
             case 10:    //"move"
                 println(sender.tag)
+                showSourceText_action("move")
             case 11:    //"attack"
                 println(sender.tag)
+                showSourceText_action("attack")
             case 12:    //"up"
                 println(sender.tag)
+                showSourceText_arrow("up")
             case 13:    //"left"
                 println(sender.tag)
+                showSourceText_arrow("left")
             case 14:    //"right"
                 println(sender.tag)
+                showSourceText_arrow("right")
             case 15:    //"down"
                 println(sender.tag)
+                showSourceText_arrow("down")
             case 16:    //";"
                 println(sender.tag)
+                showSourceText_semicolon(";")
             default:    //どの場合でもない、これが出たらバグです
                 println("ぬる")
         }
