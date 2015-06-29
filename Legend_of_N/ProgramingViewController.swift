@@ -18,10 +18,13 @@ class ProgramingViewController: UIViewController {
     }
     @IBOutlet weak var myCodeText: UITextView!
     @IBOutlet weak var myErrorText: UITextView!
+
     var canPutResetMethodFlag = true //コードの初期状態と終了状態を表すフラグ
     var canPutActionMethodFlag = false //アクションに関するフラグ
     var canPutArrowMethodFlag = false //矢印に関するフラグ
     var canPutNumberMethodFlag = false //数に関するフラグ
+    
+    var SourceCost = 0
     
     //ソースボタンのDictionary、キー値としてソースボタンの名前を持つ
     //例：UIButton test = SourceButtons["up"] としてやるとupのソースボタンがtestに代入される
@@ -85,12 +88,14 @@ class ProgramingViewController: UIViewController {
     //この関数はonTapSourceButtons関数のSwitch文で使われている
 
     
-    func showSourceText_number(num: String){ //数関するフラグ関数
+    func showSourceText_number(num: String){ //数字に関するフラグ関数
         if(canPutArrowMethodFlag == true){
             myErrorText.text = ""
             myCodeText.text = myCodeText.text + num
             canPutArrowMethodFlag = false
             canPutNumberMethodFlag = true
+            //数字メソッドはコスト移動距離分なので引数numをintに変換してSourceCostに足す
+            self.SourceCost = self.SourceCost + num.toInt()!
         }else{
             myErrorText.text = "適切なプログラミングを書いてください"
         }
@@ -102,6 +107,7 @@ class ProgramingViewController: UIViewController {
             myCodeText.text = myCodeText.text + act + "("
             canPutResetMethodFlag = false
             canPutActionMethodFlag = true
+            self.SourceCost = self.SourceCost + 1 //アクションメソッドはコスト１のためSourceCostに１を足す
         }else{
             myErrorText.text = "適切なプログラミングを書いてください"
         }
@@ -141,6 +147,7 @@ class ProgramingViewController: UIViewController {
             case 1:     //"1"
                 println(sender.tag)
                 showSourceText_number("1")
+                println("cost" + String(SourceCost))
             case 2:     //"2"
                 println(sender.tag)
                 showSourceText_number("2")
@@ -162,15 +169,18 @@ class ProgramingViewController: UIViewController {
             case 8:     //"8"
                 println(sender.tag)
                 showSourceText_number("8")
+                println("cost" + String(SourceCost))
             case 9:     //"9"
                 println(sender.tag)
                 showSourceText_number("9")
+                println("cost" + String(SourceCost))
             case 10:    //"move"
                 println(sender.tag)
                 showSourceText_action("move")
             case 11:    //"attack"
                 println(sender.tag)
                 showSourceText_action("attack")
+                println("cost" + String(SourceCost))
             case 12:    //"up"
                 println(sender.tag)
                 showSourceText_arrow("up")
