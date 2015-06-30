@@ -10,18 +10,26 @@ import UIKit
 
 class ProgramingViewController: UIViewController {
     @IBOutlet weak var mycostLabel: UILabel!
-    @IBOutlet weak var mycostImage: UIImageView!
-    //プログラミング画面が閉じて戦闘画面へと戻るボタン
     @IBOutlet weak var SourceButtonScrollView: UIScrollView!
-    @IBAction func myBackButton(sender: AnyObject) {
+    @IBAction func myBackButton(sender: AnyObject) {     //プログラミング画面が閉じて戦闘画面へと戻るボタン
         self.dismissViewControllerAnimated(true,completion:nil)
     }
     @IBOutlet weak var myCodeText: UITextView!
     @IBOutlet weak var myErrorText: UITextView!
+    @IBOutlet weak var CostLabel: UILabel!  //コストを表示するラベル
+    @IBOutlet weak var SourceCostFrame: UILabel! //ソースコストの枠線 SpriteKit使わないとrect書けないらしい
+    
+    //ソースコストのゲージ SpriteKit使わないとrect書けないらしいのでラベルでやります
+    let SourceCostBar: UILabel = UILabel()
+
     var canPutResetMethodFlag = true //コードの初期状態と終了状態を表すフラグ
     var canPutActionMethodFlag = false //アクションに関するフラグ
     var canPutArrowMethodFlag = false //矢印に関するフラグ
     var canPutNumberMethodFlag = false //数に関するフラグ
+    
+    var SourceCostNow = 0  //現在のソースコストの値
+    var SourceCostLimit = 15 //現在のソースコストの上限値、将来的にはここが他クラスから変更できるように改変するのかね
+    var SourceCostBarFor1Scale : Float = 0.0 //ソースゲージ１目盛り分の長さ
     
     //ソースボタンのDictionary、キー値としてソースボタンの名前を持つ
     //例：UIButton test = SourceButtons["up"] としてやるとupのソースボタンがtestに代入される
@@ -30,6 +38,29 @@ class ProgramingViewController: UIViewController {
     //createSourceButtonメソッドの引数buttonSizeにて用いる定数
     let SourceButtonSizeForSquare = CGSizeMake(38,38)    //正方形のソースボタンのサイズ
     let SourceButtonSizeForRectangle = CGSizeMake(76,38) //長方形のソースボタンのサイズ
+
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.SourceButtonsDidLoad()  //ソースボタンを作成、表示させる
+        self.CalculateSourceCost()   //ソースコストを表示
+        self.DisplaySourceCostBar()  //ソースゲージを表示
+
+        //SourceButtonScrollViewをストーリーボードのと違う縦幅にすることでスクロールするようになる
+        self.SourceButtonScrollView.contentSize = CGSizeMake(202, 620);
+        
+        SourceCostFrame.layer.borderWidth = 2 //ソースゲージ枠のボーダーサイズを設定
+        SourceCostBarFor1Scale = 180.0 / Float(SourceCostLimit) //ソースゲージ１目盛り分の長さ = 180(枠の幅） / コスト上限値
+    }
+    
+    
+    
+    //-----------------------------------------------------
+    //ソースボタン関連
+    //-----------------------------------------------------
+    
+    //ソースボタンに関係するメソッドはここに追記
+    
     
     //ソースボタンを作成する
     private func createSourceButton(image: String, buttonSize: CGSize, buttonPosition: CGPoint, tag: Int) -> UIButton{
@@ -69,28 +100,96 @@ class ProgramingViewController: UIViewController {
             self.SourceButtonScrollView.addSubview(SourceButtons[buttonKey]!)
         }
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.SourceButtonsDidLoad()  //ソースボタンを作成、表示させる
-
-        //SourceButtonScrollViewをストーリーボードのと違う縦幅にすることでスクロールするようになる
-        self.SourceButtonScrollView.contentSize = CGSizeMake(202, 620);
-        
+    
+    //ソースボタンをタップした時に呼び出される
+    //ソースボタンそれぞれにはtagがふってあるのでそれで場合分けしてる
+    //どのケースがどのボタンかはコメント参照
+    func onTapSourceButtons(sender: UIButton) {
+        switch(sender.tag) {
+        case 0:     //"0"
+            println(sender.tag)
+            showSourceText_number("0")
+        case 1:     //"1"
+            println(sender.tag)
+            showSourceText_number("1")
+        case 2:     //"2"
+            println(sender.tag)
+            showSourceText_number("2")
+        case 3:     //"3"
+            println(sender.tag)
+            showSourceText_number("3")
+        case 4:     //"4"
+            println(sender.tag)
+            showSourceText_number("4")
+        case 5:     //"5"
+            println(sender.tag)
+            showSourceText_number("5")
+        case 6:     //"6"
+            println(sender.tag)
+            showSourceText_number("6")
+        case 7:     //"7"
+            println(sender.tag)
+            showSourceText_number("7")
+        case 8:     //"8"
+            println(sender.tag)
+            showSourceText_number("8")
+        case 9:     //"9"
+            println(sender.tag)
+            showSourceText_number("9")
+        case 10:    //"move"
+            println(sender.tag)
+            showSourceText_action("move")
+        case 11:    //"attack"
+            println(sender.tag)
+            showSourceText_action("attack")
+        case 12:    //"up"
+            println(sender.tag)
+            showSourceText_arrow("up")
+        case 13:    //"left"
+            println(sender.tag)
+            showSourceText_arrow("left")
+        case 14:    //"right"
+            println(sender.tag)
+            showSourceText_arrow("right")
+        case 15:    //"down"
+            println(sender.tag)
+            showSourceText_arrow("down")
+        case 16:    //";"
+            println(sender.tag)
+            showSourceText_semicolon(";")
+        default:    //どの場合でもない、これが出たらバグです
+            println("ぬる")
+        }
     }
+    
+    
+    
+    //------------------------------
+    //ソーステキスト関連
+    //------------------------------
+    
+    //ソーステキストに関連するメソッドはここに追記
+    
     
     //それぞれのフラグを条件にしてテキストを表示する関数
     //条件が合わないなら”適切なプログラミングを書いてください。”と表示する
     //(例)"1"ボタンを押すにはarrowフラグがtrueでないといけなく、その直前の”right”などのボタンを押した時にarrowフラグはtrueになる
     //この関数はonTapSourceButtons関数のSwitch文で使われている
-
     
-    func showSourceText_number(num: String){ //数関するフラグ関数
+    func showSourceText_number(num: String){ //数字に関するフラグ関数
         if(canPutArrowMethodFlag == true){
-            myErrorText.text = ""
-            myCodeText.text = myCodeText.text + num
-            canPutArrowMethodFlag = false
-            canPutNumberMethodFlag = true
+            if((SourceCostNow + num.toInt()!) > SourceCostLimit){ //ソースコストが上限値を突破したらエラー吐かせる
+                myErrorText.text = "コストが上限値を突破してしまいます"
+            }else{
+                myErrorText.text = ""
+                myCodeText.text = myCodeText.text + num
+                canPutArrowMethodFlag = false
+                canPutNumberMethodFlag = true
+                //数字メソッドはコスト移動距離分なので引数numをintに変換してSourceCostに足す
+                self.SourceCostNow = self.SourceCostNow + num.toInt()!
+                self.CalculateSourceCost() //ソースコスト表示更新
+                self.DisplaySourceCostBar()  //ソースゲージを更新
+            }
         }else{
             myErrorText.text = "適切なプログラミングを書いてください"
         }
@@ -98,10 +197,19 @@ class ProgramingViewController: UIViewController {
     
     func showSourceText_action(act: String){//行動に関する
         if(canPutResetMethodFlag == true){
-            myErrorText.text = ""
-            myCodeText.text = myCodeText.text + act + "("
-            canPutResetMethodFlag = false
-            canPutActionMethodFlag = true
+            if((SourceCostNow + 1) > SourceCostLimit){ //ソースコストが上限値を突破したらエラー吐かせる
+                myErrorText.text = "コストが上限値を突破してしまいます"
+            }else{
+                myErrorText.text = ""
+                myCodeText.text = myCodeText.text + act + "("
+                canPutResetMethodFlag = false
+                canPutActionMethodFlag = true
+                //アクションメソッドはコスト１のためSourceCostに１を足す
+                self.SourceCostNow = self.SourceCostNow + 1
+                self.CalculateSourceCost() ////ソースコスト表示更新
+                self.DisplaySourceCostBar()  //ソースゲージを更新
+
+            }
         }else{
             myErrorText.text = "適切なプログラミングを書いてください"
         }
@@ -130,66 +238,45 @@ class ProgramingViewController: UIViewController {
         
     }
 
-    //ソースボタンをタップした時に呼び出される
-    //ソースボタンそれぞれにはtagがふってあるのでそれで場合分けしてる
-    //どのケースがどのボタンかはコメント参照
-    func onTapSourceButtons(sender: UIButton) {
-        switch(sender.tag) {
-            case 0:     //"0"
-                println(sender.tag)
-                showSourceText_number("0")
-            case 1:     //"1"
-                println(sender.tag)
-                showSourceText_number("1")
-            case 2:     //"2"
-                println(sender.tag)
-                showSourceText_number("2")
-            case 3:     //"3"
-                println(sender.tag)
-                showSourceText_number("3")
-            case 4:     //"4"
-                println(sender.tag)
-                showSourceText_number("4")
-            case 5:     //"5"
-                println(sender.tag)
-                showSourceText_number("5")
-            case 6:     //"6"
-                println(sender.tag)
-                showSourceText_number("6")
-            case 7:     //"7"
-                println(sender.tag)
-                showSourceText_number("7")
-            case 8:     //"8"
-                println(sender.tag)
-                showSourceText_number("8")
-            case 9:     //"9"
-                println(sender.tag)
-                showSourceText_number("9")
-            case 10:    //"move"
-                println(sender.tag)
-                showSourceText_action("move")
-            case 11:    //"attack"
-                println(sender.tag)
-                showSourceText_action("attack")
-            case 12:    //"up"
-                println(sender.tag)
-                showSourceText_arrow("up")
-            case 13:    //"left"
-                println(sender.tag)
-                showSourceText_arrow("left")
-            case 14:    //"right"
-                println(sender.tag)
-                showSourceText_arrow("right")
-            case 15:    //"down"
-                println(sender.tag)
-                showSourceText_arrow("down")
-            case 16:    //";"
-                println(sender.tag)
-                showSourceText_semicolon(";")
-            default:    //どの場合でもない、これが出たらバグです
-                println("ぬる")
-        }
+    
+    
+    //-----------------------------------
+    //ソースコスト関連
+    //-----------------------------------
+    
+    //ソースコストに関連するメソッドはここに追記
+    
+    
+    //現在のソースコストを再計算する
+    //コストの値が変更することがあれば必ず呼んでください
+    func CalculateSourceCost(){
+        self.CostLabel.text = String(SourceCostNow) + " / " + String(SourceCostLimit)
     }
+    
+    //ソースゲージを表示する
+    //これもコストの値が変更することがあれば必ず呼んでください
+    func DisplaySourceCostBar(){
+        //古いコストゲージをviewから削除する、これやらずにaddSubviewしまくるとメモリが死ぬ
+        if (self.SourceCostBar.isDescendantOfView(self.view)) {
+            self.SourceCostBar.removeFromSuperview()
+        }
+        
+        //ソースコストの値に合わせて表示するゲージの長さを変える
+        //CGFloat(Float(SourceCostNow)*SourceCostBarFor1Scale)は見た目気持ち悪いけど
+        //（現在のコスト）*（１ゲージ分の幅）をCGFloat型で算出してるだけです
+        SourceCostBar.frame = CGRectMake(0,0,CGFloat(Float(SourceCostNow)*SourceCostBarFor1Scale),20)
+        
+        //こっちはもっと気持ち悪くなってしまった
+        //xcodeの仕様上、positionで指定する座標はviewの中央となり、ただ幅を増やすだけだと左右両方に伸びます
+        //なので左に伸びた分右に表示位置をずらしています
+        //それとCGPointがintで値を返せってうるさいのでintに変換してます
+        SourceCostBar.layer.position = CGPoint(x: 295+(SourceCostNow*Int(SourceCostBarFor1Scale)/2),y: 33)
+        
+        SourceCostBar.backgroundColor = UIColor.greenColor()
+        self.view.addSubview(SourceCostBar)
+    }
+
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
