@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class ProgramingViewController: UIViewController {
     @IBOutlet weak var mycostLabel: UILabel!
@@ -22,7 +23,7 @@ class ProgramingViewController: UIViewController {
     var canPutActionMethodFlag = false //アクションに関するフラグ
     var canPutArrowMethodFlag = false //矢印に関するフラグ
     var canPutNumberMethodFlag = false //数に関するフラグ
-    
+    var getText:NSString = ""
     //ソースボタンのDictionary、キー値としてソースボタンの名前を持つ
     //例：UIButton test = SourceButtons["up"] としてやるとupのソースボタンがtestに代入される
     var SourceButtons = Dictionary<String, UIButton>()
@@ -63,6 +64,7 @@ class ProgramingViewController: UIViewController {
         SourceButtons["9"] = self.createSourceButton("SourceButton_9", buttonSize: SourceButtonSizeForSquare, buttonPosition: CGPoint(x: 171, y: 435),  tag: 9)
         SourceButtons["0"] = self.createSourceButton("SourceButton_0", buttonSize: SourceButtonSizeForSquare, buttonPosition: CGPoint(x: 101, y: 498),  tag: 0)
         SourceButtons["semicolon"] = self.createSourceButton("SourceButton_semicolon", buttonSize: SourceButtonSizeForSquare, buttonPosition: CGPoint(x: 34, y: 573),  tag: 16)
+        SourceButtons["delete"] = self.createSourceButton("DeleteButton", buttonSize: SourceButtonSizeForSquare, buttonPosition: CGPoint(x: 101, y: 573),  tag: 17)
         
         //ソースボタンそれぞれをSourceButtonScrollViewのSubviewに追加する（これやらないとボタンが見えない）
         for buttonKey in SourceButtons.keys {
@@ -186,6 +188,14 @@ class ProgramingViewController: UIViewController {
             case 16:    //";"
                 println(sender.tag)
                 showSourceText_semicolon(";")
+            case 17: //"delete"
+                getText = myCodeText.text
+                let arr = getText.componentsSeparatedByString("\n")
+                let arrlength = arr.count
+                println(arr[0])
+                println(arr[1])
+                println(arrlength)
+
             default:    //どの場合でもない、これが出たらバグです
                 println("ぬる")
         }
