@@ -23,7 +23,10 @@ class ProgramingViewController: UIViewController {
     var canPutActionMethodFlag = false //アクションに関するフラグ
     var canPutArrowMethodFlag = false //矢印に関するフラグ
     var canPutNumberMethodFlag = false //数に関するフラグ
-    var getText:NSString = ""
+    var deletePoint = 0 //削除する位置を保存
+    var compareNull = 0 //テキスト中のぬるの数を比較する
+    var countNull = 0 //テキスト中のぬるの数を保存
+    
     //ソースボタンのDictionary、キー値としてソースボタンの名前を持つ
     //例：UIButton test = SourceButtons["up"] としてやるとupのソースボタンがtestに代入される
     var SourceButtons = Dictionary<String, UIButton>()
@@ -71,11 +74,11 @@ class ProgramingViewController: UIViewController {
             self.SourceButtonScrollView.addSubview(SourceButtons[buttonKey]!)
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.SourceButtonsDidLoad()  //ソースボタンを作成、表示させる
-
+        
         //SourceButtonScrollViewをストーリーボードのと違う縦幅にすることでスクロールするようになる
         self.SourceButtonScrollView.contentSize = CGSizeMake(202, 620);
         
@@ -85,7 +88,7 @@ class ProgramingViewController: UIViewController {
     //条件が合わないなら”適切なプログラミングを書いてください。”と表示する
     //(例)"1"ボタンを押すにはarrowフラグがtrueでないといけなく、その直前の”right”などのボタンを押した時にarrowフラグはtrueになる
     //この関数はonTapSourceButtons関数のSwitch文で使われている
-
+    
     
     func showSourceText_number(num: String){ //数関するフラグ関数
         if(canPutArrowMethodFlag == true){
@@ -98,12 +101,15 @@ class ProgramingViewController: UIViewController {
         }
     }
     
+    //アクションボタンにのみ、先頭に\0を入れてsaveDeletePoint関数で判別できるようにしている
+    //入れた\0の数をカウントしている
     func showSourceText_action(act: String){//行動に関する
         if(canPutResetMethodFlag == true){
             myErrorText.text = ""
-            myCodeText.text = myCodeText.text + act + "("
+            myCodeText.text = myCodeText.text + "\0" + act + "("
             canPutResetMethodFlag = false
             canPutActionMethodFlag = true
+            countNull++
         }else{
             myErrorText.text = "適切なプログラミングを書いてください"
         }
@@ -118,7 +124,7 @@ class ProgramingViewController: UIViewController {
         }else{
             myErrorText.text = "適切なプログラミングを書いてください"
         }
-
+        
     }
     func showSourceText_semicolon(colon: String){//セミコロン
         if(canPutNumberMethodFlag == true){
@@ -131,90 +137,112 @@ class ProgramingViewController: UIViewController {
         }
         
     }
+    
+    //削除する位置を保存する関数, tapDeleteTextButton関数で用られている
+    //テキスト中の\0を探して, compareNullで数えていく
+    //アクションボタンで数えていたcountNullとイコールならばその位置をdeletePointに保存する
+    func saveDeletePoint()-> Int{
+        for (var textSize=0; textSize<(myCodeText.text as NSString).length; textSize++){
+            if(myCodeText.text[advance(myCodeText.text.startIndex, textSize)] == "\0"){
+                compareNull++
+                if(compareNull==countNull){
+                    deletePoint = textSize
+                }
+            }
+        }
+        return deletePoint
+        
+    }
+    
+    //デリートボタンをタップした時の動作
+    //myCodeTextのはじめからdeletePointの位置までをmyCodeText.textに入れて返す。これで削除しているようにみえるはず。
+    //削除を行ったらcountNullを１引いて、次の行のアクションの前の\0に移動する。また、compareNullも初期値0にする
 
+    func tapDeleteTextButton() ->String!{
+        myCodeText.text = myCodeText.text.substringToIndex(advance(myCodeText.text.startIndex, saveDeletePoint()))
+        countNull--
+        compareNull = 0
+        return myCodeText.text
+    }
+    
     //ソースボタンをタップした時に呼び出される
     //ソースボタンそれぞれにはtagがふってあるのでそれで場合分けしてる
     //どのケースがどのボタンかはコメント参照
     func onTapSourceButtons(sender: UIButton) {
         switch(sender.tag) {
-            case 0:     //"0"
-                println(sender.tag)
-                showSourceText_number("0")
-            case 1:     //"1"
-                println(sender.tag)
-                showSourceText_number("1")
-            case 2:     //"2"
-                println(sender.tag)
-                showSourceText_number("2")
-            case 3:     //"3"
-                println(sender.tag)
-                showSourceText_number("3")
-            case 4:     //"4"
-                println(sender.tag)
-                showSourceText_number("4")
-            case 5:     //"5"
-                println(sender.tag)
-                showSourceText_number("5")
-            case 6:     //"6"
-                println(sender.tag)
-                showSourceText_number("6")
-            case 7:     //"7"
-                println(sender.tag)
-                showSourceText_number("7")
-            case 8:     //"8"
-                println(sender.tag)
-                showSourceText_number("8")
-            case 9:     //"9"
-                println(sender.tag)
-                showSourceText_number("9")
-            case 10:    //"move"
-                println(sender.tag)
-                showSourceText_action("move")
-            case 11:    //"attack"
-                println(sender.tag)
-                showSourceText_action("attack")
-            case 12:    //"up"
-                println(sender.tag)
-                showSourceText_arrow("up")
-            case 13:    //"left"
-                println(sender.tag)
-                showSourceText_arrow("left")
-            case 14:    //"right"
-                println(sender.tag)
-                showSourceText_arrow("right")
-            case 15:    //"down"
-                println(sender.tag)
-                showSourceText_arrow("down")
-            case 16:    //";"
-                println(sender.tag)
-                showSourceText_semicolon(";")
-            case 17: //"delete"
-                getText = myCodeText.text
-                let arr = getText.componentsSeparatedByString("\n")
-                let arrlength = arr.count
-                println(arr[0])
-                println(arr[1])
-                println(arrlength)
-
-            default:    //どの場合でもない、これが出たらバグです
-                println("ぬる")
+        case 0:     //"0"
+            println(sender.tag)
+            showSourceText_number("0")
+        case 1:     //"1"
+            println(sender.tag)
+            showSourceText_number("1")
+        case 2:     //"2"
+            println(sender.tag)
+            showSourceText_number("2")
+        case 3:     //"3"
+            println(sender.tag)
+            showSourceText_number("3")
+        case 4:     //"4"
+            println(sender.tag)
+            showSourceText_number("4")
+        case 5:     //"5"
+            println(sender.tag)
+            showSourceText_number("5")
+        case 6:     //"6"
+            println(sender.tag)
+            showSourceText_number("6")
+        case 7:     //"7"
+            println(sender.tag)
+            showSourceText_number("7")
+        case 8:     //"8"
+            println(sender.tag)
+            showSourceText_number("8")
+        case 9:     //"9"
+            println(sender.tag)
+            showSourceText_number("9")
+        case 10:    //"move"
+            println(sender.tag)
+            showSourceText_action("move")
+        case 11:    //"attack"
+            println(sender.tag)
+            showSourceText_action("attack")
+        case 12:    //"up"
+            println(sender.tag)
+            showSourceText_arrow("up")
+        case 13:    //"left"
+            println(sender.tag)
+            showSourceText_arrow("left")
+        case 14:    //"right"
+            println(sender.tag)
+            showSourceText_arrow("right")
+        case 15:    //"down"
+            println(sender.tag)
+            showSourceText_arrow("down")
+        case 16:    //";"
+            println(sender.tag)
+            showSourceText_semicolon(";")
+        case 17: //"delete"
+            tapDeleteTextButton()
+            
+        default:    //どの場合でもない、これが出たらバグです
+            println("ぬる")
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
     }
     */
-
+    
 }
