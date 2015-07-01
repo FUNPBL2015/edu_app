@@ -264,11 +264,15 @@ class ProgramingViewController: UIViewController {
     //デリートボタンをタップした時の動作
     //myCodeTextのはじめからdeletePointの位置までをmyCodeText.textに入れて返す。これで削除しているようにみえるはず。
     //削除を行ったらcountNullを１引いて、前の行のアクションの前の\0に移動する。また、compareNullも初期値0にする
-    
+    //最後に各フラグを初期状態にリセット
     func tapDeleteTextButton() ->String!{
         myCodeText.text = myCodeText.text.substringToIndex(advance(myCodeText.text.startIndex, saveDeletePoint()))
         countNull--
         compareNull = 0
+        canPutResetMethodFlag = true //コードの初期状態と終了状態を表すフラグ
+        canPutActionMethodFlag = false //アクションに関するフラグ
+        canPutArrowMethodFlag = false //矢印に関するフラグ
+        canPutNumberMethodFlag = false
         return myCodeText.text
     }
     
