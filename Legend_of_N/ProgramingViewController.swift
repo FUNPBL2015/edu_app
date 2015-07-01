@@ -21,11 +21,14 @@ class ProgramingViewController: UIViewController {
     
     //ソースコストのゲージ SpriteKit使わないとrect書けないらしいのでラベルでやります
     let SourceCostBar: UILabel = UILabel()
-
+    
     var canPutResetMethodFlag = true //コードの初期状態と終了状態を表すフラグ
     var canPutActionMethodFlag = false //アクションに関するフラグ
     var canPutArrowMethodFlag = false //矢印に関するフラグ
     var canPutNumberMethodFlag = false //数に関するフラグ
+    var deletePoint = 0 //削除する位置を保存
+    var compareNull = 0 //テキスト中のぬるの数を比較する
+    var countNull = 0 //テキスト中のぬるの数を保存
     
     var SourceCostNow = 0  //現在のソースコストの値
     var SourceCostLimit = 15 //現在のソースコストの上限値、将来的にはここが他クラスから変更できるように改変するのかね
@@ -38,14 +41,14 @@ class ProgramingViewController: UIViewController {
     //createSourceButtonメソッドの引数buttonSizeにて用いる定数
     let SourceButtonSizeForSquare = CGSizeMake(38,38)    //正方形のソースボタンのサイズ
     let SourceButtonSizeForRectangle = CGSizeMake(76,38) //長方形のソースボタンのサイズ
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.SourceButtonsDidLoad()  //ソースボタンを作成、表示させる
         self.CalculateSourceCost()   //ソースコストを表示
         self.DisplaySourceCostBar()  //ソースゲージを表示
-
+        
         //SourceButtonScrollViewをストーリーボードのと違う縦幅にすることでスクロールするようになる
         self.SourceButtonScrollView.contentSize = CGSizeMake(202, 620);
         
@@ -94,6 +97,7 @@ class ProgramingViewController: UIViewController {
         SourceButtons["9"] = self.createSourceButton("SourceButton_9", buttonSize: SourceButtonSizeForSquare, buttonPosition: CGPoint(x: 171, y: 435),  tag: 9)
         SourceButtons["0"] = self.createSourceButton("SourceButton_0", buttonSize: SourceButtonSizeForSquare, buttonPosition: CGPoint(x: 101, y: 498),  tag: 0)
         SourceButtons["semicolon"] = self.createSourceButton("SourceButton_semicolon", buttonSize: SourceButtonSizeForSquare, buttonPosition: CGPoint(x: 34, y: 573),  tag: 16)
+        SourceButtons["delete"] = self.createSourceButton("DeleteButton", buttonSize: SourceButtonSizeForSquare, buttonPosition: CGPoint(x: 101, y: 573),  tag: 17)
         
         //ソースボタンそれぞれをSourceButtonScrollViewのSubviewに追加する（これやらないとボタンが見えない）
         for buttonKey in SourceButtons.keys {
@@ -157,13 +161,13 @@ class ProgramingViewController: UIViewController {
         case 16:    //";"
             println(sender.tag)
             showSourceText_semicolon(";")
+        case 17: //"delete"
+            tapDeleteTextButton()
+            
         default:    //どの場合でもない、これが出たらバグです
             println("ぬる")
         }
     }
-    
-    
-    
     //------------------------------
     //ソーステキスト関連
     //------------------------------
@@ -195,20 +199,23 @@ class ProgramingViewController: UIViewController {
         }
     }
     
+    //アクションボタンにのみ、先頭に\0を入れてsaveDeletePoint関数で判別できるようにしている
+    //入れた\0の数をカウントしている
     func showSourceText_action(act: String){//行動に関する
         if(canPutResetMethodFlag == true){
             if((SourceCostNow + 1) > SourceCostLimit){ //ソースコストが上限値を突破したらエラー吐かせる
                 myErrorText.text = "コストが上限値を突破してしまいます"
             }else{
                 myErrorText.text = ""
-                myCodeText.text = myCodeText.text + act + "("
+                myCodeText.text = myCodeText.text + "\0" + act + "("
                 canPutResetMethodFlag = false
                 canPutActionMethodFlag = true
+                countNull++
                 //アクションメソッドはコスト１のためSourceCostに１を足す
                 self.SourceCostNow = self.SourceCostNow + 1
                 self.CalculateSourceCost() ////ソースコスト表示更新
                 self.DisplaySourceCostBar()  //ソースゲージを更新
-
+                
             }
         }else{
             myErrorText.text = "適切なプログラミングを書いてください"
@@ -224,7 +231,7 @@ class ProgramingViewController: UIViewController {
         }else{
             myErrorText.text = "適切なプログラミングを書いてください"
         }
-
+        
     }
     func showSourceText_semicolon(colon: String){//セミコロン
         if(canPutNumberMethodFlag == true){
@@ -237,7 +244,38 @@ class ProgramingViewController: UIViewController {
         }
         
     }
-
+    
+    //削除する位置を保存する関数, tapDeleteTextButton関数で用られている
+    //テキスト中の\0を探して, compareNullで数えていく
+    //アクションボタンで数えていたcountNullとイコールならばその位置をdeletePointに保存する
+    func saveDeletePoint()-> Int{
+        for (var textSize=0; textSize<(myCodeText.text as NSString).length; textSize++){
+            if(myCodeText.text[advance(myCodeText.text.startIndex, textSize)] == "\0"){
+                compareNull++
+                if(compareNull==countNull){
+                    deletePoint = textSize
+                }
+            }
+        }
+        return deletePoint
+        
+    }
+    
+    //デリートボタンをタップした時の動作
+    //myCodeTextのはじめからdeletePointの位置までをmyCodeText.textに入れて返す。これで削除しているようにみえるはず。
+    //削除を行ったらcountNullを１引いて、前の行のアクションの前の\0に移動する。また、compareNullも初期値0にする
+    //最後に各フラグを初期状態にリセット
+    func tapDeleteTextButton() ->String!{
+        myCodeText.text = myCodeText.text.substringToIndex(advance(myCodeText.text.startIndex, saveDeletePoint()))
+        countNull--
+        compareNull = 0
+        canPutResetMethodFlag = true //コードの初期状態と終了状態を表すフラグ
+        canPutActionMethodFlag = false //アクションに関するフラグ
+        canPutArrowMethodFlag = false //矢印に関するフラグ
+        canPutNumberMethodFlag = false
+        return myCodeText.text
+    }
+    
     
     
     //-----------------------------------
@@ -245,10 +283,9 @@ class ProgramingViewController: UIViewController {
     //-----------------------------------
     
     //ソースコストに関連するメソッドはここに追記
-    
-    
     //現在のソースコストを再計算する
     //コストの値が変更することがあれば必ず呼んでください
+    
     func CalculateSourceCost(){
         self.CostLabel.text = String(SourceCostNow) + " / " + String(SourceCostLimit)
     }
@@ -275,23 +312,20 @@ class ProgramingViewController: UIViewController {
         SourceCostBar.backgroundColor = UIColor.greenColor()
         self.view.addSubview(SourceCostBar)
     }
-
-
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
     }
     */
-
 }
